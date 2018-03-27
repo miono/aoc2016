@@ -96,7 +96,6 @@ func main() {
 		newSleigh.turnAndMove(direction, distance)
 	}
 	fmt.Printf("Distance to the end of the moves is: %d\n", newSleigh.curPos.xPos+newSleigh.curPos.yPos)
-	fmt.Printf("Distance to first double visit is: %v", intAbs(newSleigh.firstDoubleVisit.xPos)+intAbs(newSleigh.firstDoubleVisit.yPos))
-	//	fmt.Println(newSleigh.allPos)
+	fmt.Printf("Distance to first double visit is: %v\n", intAbs(newSleigh.firstDoubleVisit.xPos)+intAbs(newSleigh.firstDoubleVisit.yPos))
 
 }

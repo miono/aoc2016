@@ -21,8 +21,7 @@ type sleigh struct {
 	curPos           sleighPos
 	direction        int8
 	allPos           []sleighPos
-	firstDoubleVisit sleighPos
-	doubleHit        bool
+	firstDoubleVisit *sleighPos
 }
 
 type sleighPos struct {
@@ -72,11 +71,10 @@ func (s *sleigh) turnAndMove(direction string, distance int) {
 }
 
 func (s *sleigh) checkPositions(newPos sleighPos) {
-	if s.doubleHit == false {
-		for i := range s.allPos {
-			if newPos == s.allPos[i] {
-				s.firstDoubleVisit = newPos
-				s.doubleHit = true
+	if s.firstDoubleVisit == nil {
+		for _, p := range s.allPos {
+			if newPos == p {
+				s.firstDoubleVisit = &newPos
 			}
 		}
 	}
@@ -84,8 +82,7 @@ func (s *sleigh) checkPositions(newPos sleighPos) {
 }
 
 func main() {
-	newSleigh := sleigh{sleighPos{0, 0}, N, make([]sleighPos, 0), sleighPos{}, false}
-	newSleigh.allPos = append(newSleigh.allPos, sleighPos{0, 0})
+	newSleigh := sleigh{sleighPos{0, 0}, N, []sleighPos{sleighPos{0, 0}}, nil}
 	inputString := "R4, R3, R5, L3, L5, R2, L2, R5, L2, R5, R5, R5, R1, R3, L2, L2, L1, R5, L3, R1, L2, R1, L3, L5, L1, R3, L4, R2, R4, L3, L1, R4, L4, R3, L5, L3, R188, R4, L1, R48, L5, R4, R71, R3, L2, R188, L3, R2, L3, R3, L5, L1, R1, L2, L4, L2, R5, L3, R3, R3, R4, L3, L4, R5, L4, L4, R3, R4, L4, R1, L3, L1, L1, R4, R1, L4, R1, L1, L3, R2, L2, R2, L1, R5, R3, R4, L5, R2, R5, L5, R1, R2, L1, L3, R3, R1, R3, L4, R4, L4, L1, R1, L2, L2, L4, R1, L3, R4, L2, R3, L1, L5, R4, R5, R2, R5, R1, R5, R1, R3, L3, L2, L2, L5, R2, L2, R5, R5, L2, R3, L5, R5, L2, R4, R2, L1, R3, L5, R3, R2, R5, L1, R3, L2, R2, R1"
 	for _, x := range strings.Split(inputString, ", ") {
 		direction := x[:1]

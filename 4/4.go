@@ -55,6 +55,22 @@ func (r room) checkRoom() int {
 	}
 }
 
+func (r room) decipherRoom() string {
+	alphabet := []string{"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"}
+	mod := len(alphabet)
+	chars := strings.Split(r.roomName, "")
+	var outchars []string
+	for _, x := range chars {
+		for i := range alphabet {
+			if x == alphabet[i] {
+				charToAppend := alphabet[(i+r.sectorID)%mod]
+				outchars = append(outchars, charToAppend)
+			}
+		}
+	}
+	return strings.Join(outchars, "")
+}
+
 func main() {
 	// var rooms []room
 	var sectorSum int
@@ -74,7 +90,13 @@ func main() {
 		sectorID, _ := strconv.Atoi(dashSplitted[len(dashSplitted)-3])
 		checksum := dashSplitted[len(dashSplitted)-2]
 		newRoom := room{roomName, sectorID, checksum}
-		sectorSum += newRoom.checkRoom()
+		val := newRoom.checkRoom()
+		if val != 0 {
+			sectorSum += val
+			if strings.Contains(newRoom.decipherRoom(), "north") {
+				fmt.Println(newRoom.decipherRoom(), newRoom.sectorID)
+			}
+		}
 	}
 	fmt.Printf("The sum of sectorIDs with real rooms is %v\n", sectorSum)
 }

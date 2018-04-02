@@ -15,6 +15,15 @@ func getMD5(in string) string {
 
 }
 
+func checkIfDone(pw []string) bool {
+	for _, x := range pw {
+		if string(x) == "_" {
+			return false
+		}
+	}
+	return true
+}
+
 func a(doorID string) string {
 	var password string
 	for j := 0; ; j++ {
@@ -29,15 +38,6 @@ func a(doorID string) string {
 
 	}
 	return password
-}
-
-func checkIfDone(pw []string) bool {
-	for _, x := range pw {
-		if string(x) == "_" {
-			return false
-		}
-	}
-	return true
 }
 
 func b(doorID string) string {

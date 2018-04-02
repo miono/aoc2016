@@ -65,6 +65,7 @@ func (r room) decipherRoom() string {
 			if x == alphabet[i] {
 				charToAppend := alphabet[(i+r.sectorID)%mod]
 				outchars = append(outchars, charToAppend)
+				break
 			}
 		}
 	}

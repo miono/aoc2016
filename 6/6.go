@@ -6,7 +6,7 @@ import (
 	"os"
 )
 
-func getRealMsg(straangs []string) string {
+func getRealMsg(straangs []string, mode byte) string {
 
 	var outString string
 	for i := range straangs[0] {
@@ -23,15 +23,28 @@ func getRealMsg(straangs []string) string {
 			}
 		}
 		// Get most common character
-		var highestChar string
-		var highestCount int
-		for k, v := range charMap {
-			if v > highestCount {
-				highestChar = k
-				highestCount = v
+		if mode == 'a' {
+			var highestChar string
+			var highestCount int
+			for k, v := range charMap {
+				if v > highestCount {
+					highestChar = k
+					highestCount = v
+				}
 			}
+			outString = outString + highestChar
 		}
-		outString = outString + highestChar
+		if mode == 'b' {
+			var highestChar string
+			var highestCount = 1000
+			for k, v := range charMap {
+				if v < highestCount {
+					highestChar = k
+					highestCount = v
+				}
+			}
+			outString = outString + highestChar
+		}
 
 	}
 
@@ -48,5 +61,6 @@ func main() {
 	for scanner.Scan() {
 		msgs = append(msgs, scanner.Text())
 	}
-	fmt.Println(getRealMsg(msgs))
+	fmt.Printf("The first password is %v\n", getRealMsg(msgs, 'a'))
+	fmt.Printf("The second password is %v\n", getRealMsg(msgs, 'b'))
 }

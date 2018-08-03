@@ -6,6 +6,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type display struct {
@@ -103,6 +104,9 @@ func main() {
 			myDisplay.rotate(mode, place, amount)
 
 		}
+		myDisplay.print()
+		time.Sleep(time.Millisecond * 100)
+		fmt.Println("\033[2J")
 
 	}
 	fmt.Println("This is what the display looks after all instructions have been made:")
